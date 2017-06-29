@@ -38,14 +38,10 @@ alias py='python3'
 alias py2='python'
 alias py3='python3'
 
-alias sublime='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
-
 # Other aliases
 alias reset_bash='source ~/.bashrc'
 alias reload_inputrc='source ~/.inputrc'
 alias xterm='xterm -rv &'
-alias show_hidden_files='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
-alias hide_hidden_files='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
 # -------------
 # History and autocomplete settings
@@ -58,6 +54,21 @@ export HISTIGNORE="pwd:ls:cd:ll:bg:fg:history:h" # ignore basic commands
 export PROMPT_COMMAND="history -a;$PROMPT_COMMAND" # save each command to history after is has been executed
 
 shopt -s histappend # append history instead of overwriting
+
+# -------------
+# Operating system specific aliases
+# -------------
+if [[ "$OSTYPE" == "darwin"* ]]; then # Mac
+  alias sublime='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+  alias show_hidden_files='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
+  alias hide_hidden_files='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+  if grep -qE "(Microsoft|WSL)" /proc/version &> /dev/null ; then # Bash on Windows
+    PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+    PATH="$PATH:/mnt/c/Program\ Files/Docker/Docker/resources/bin"
+  # else # Linux
+  fi
+fi
 
 # -------------
 # Functions
@@ -97,7 +108,7 @@ function extract_all()
 # Creates an archive (*.tar.gz) from given directory.
 function maketar() { tar czf "${1%%/}.tar.gz"  "${1%%/}/"; }
 
-# Creates an archive (*.tar.gz) from given directory.
+# Creates an archive (*.tar.gz) from given directory (verbose).
 function maketar_v() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
 
 # Create a ZIP archive of a file or folder.
