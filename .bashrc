@@ -66,6 +66,8 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
   if grep -qE "(Microsoft|WSL)" /proc/version &> /dev/null ; then # Bash on Windows
     PATH="$HOME/bin:$HOME/.local/bin:$PATH"
     PATH="$PATH:/mnt/c/Program\ Files/Docker/Docker/resources/bin"
+    alias docker=docker.exe
+    alias sublime='/mnt/c/Program\ Files/Sublime\ Text\ 3/subl.exe'
   # else # Linux
   fi
 fi
