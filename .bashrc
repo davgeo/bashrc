@@ -4,23 +4,27 @@
 [ -z "$PS1" ] && return
 
 # -------------
+# Set custom env variables
+# -------------
+if [ -f ~/.bashrc_custom_env ]; then
+    source ~/.bashrc_custom_env
+fi
+
+# -------------
 # Colour scheme settings
 # -------------
 # Set color scheme
-export PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[0;35m\]\h\[\e[m\] \[\e[0;33m\]\W\[\e[m\] \[\e[0;37m\]\$\[\e[m\] \[\e[0;36m'
+if [ -z "$USE_ALT_BASH_SCHEME" ]; then
+  export PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[0;35m\]\h\[\e[m\] \[\e[0;33m\]\W\[\e[m\] \[\e[0;37m\]\$\[\e[m\] \[\e[0;36m'
+else
+  export PS1='\[\e[0;33m\]\u\[\e[m\] \[\e[0;31m\]\h\[\e[m\] \[\e[1;34m\]\W\[\e[m\] \[\e[0;37m\]\$\[\e[m\] \[\e[0;32m'
+fi
 
 # -------------
 # History search binding
 # -------------
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
-
-# -------------
-# Set custom env variables
-# -------------
-if [ -f ./.bashrc_custom_env ]; then
-    source ./.bashrc_custom_env
-fi
 
 # -------------
 # Aliases
